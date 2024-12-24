@@ -7,6 +7,6 @@ public class UniversityNode {
     private String name;
     private String type;
 
-    @Relationship()
+    @Relationship(type = "HAS_MAJOR", direction = Relationship.Direction.OUTGOING)
     private List<MajorNode> majors;
 }

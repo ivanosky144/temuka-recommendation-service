@@ -6,12 +6,12 @@ public class UserNode {
 
     private String name;
 
-    @Relationship()
+    @Relationship(type = "FOLLOWS", direction = Relationship.Direction.OUTGOING)
     private List<UserNode> friends;
 
-    @Relationship()
+    @Relationship(type = "LIKES", direction = Relationship.Direction.OUTGOING)
     private List<UniversityNode> likedUniversities;
 
-    @Relationship()
+    @Relationship(type = "INTERESTED_IN", direction = Relationship.Direction.OUTGOING)
     private List<MajorNode> interestedMajor;
 }
