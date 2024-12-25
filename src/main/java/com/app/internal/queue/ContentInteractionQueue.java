@@ -4,8 +4,7 @@ import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.context.annotation.Bean;
 import org.springframework.data.redis.core.StringRedisTemplate;
 import org.springframework.stereotype.Component;
-import org.springframework.data.redis.listener.MessageListener;
-import org.springframework.data.redis.listener.MessageListenerContainer;
+import org.springframework.data.redis.listener.ChannelTopic;
 import org.springframework.data.redis.listener.RedisMessageListenerContainer;
 import org.springframework.data.redis.listener.adapter.MessageListenerAdapter;
 import com.app.internal.handler.ContentInteractionHandler;
@@ -23,15 +22,17 @@ public class ContentInteractionQueue {
     }
 
     @Bean
-    public MessageListenerContainer messageListenerContainer() {
+    public RedisMessageListenerContainer messageListenerContainer() {
         RedisMessageListenerContainer container = new RedisMessageListenerContainer();
         container.setConnectionFactory(redisTemplate.getConnectionFactory());
-        container.addMessageListener(new MessageListenerAdapter(this, "processContentInteractionMessage"), new ChannelTopic("contentInteractionChannel"));
+        container.addMessageListener(
+            new MessageListenerAdapter(this, "processContentInteractionMessage"),
+            new ChannelTopic("contentInteractionChannel")
+        );        
         return container;
     }
 
     public void processContentInteractionMessage(String message) {
-        // Handle message related to content interaction (post, upvote, community join)
-        contentInteractionHandler.handleContentInteraction(message);
+        contentInteractionHandler.handleContentInteraction(null);
     }
 }
