@@ -1,0 +1,42 @@
+version: '3.9'
+
+services:
+  main-api-service:
+    build:
+      context: .
+      dockerfile: Dockerfile
+    container_name: main-api-service
+    ports:
+      - "3200:3200"
+    environment:
+      REDIS_HOST: redis:6379
+      REDIS_USER: ""
+      REDIS_PASSWORD: ""
+    depends_on:
+      - redis
+    networks:
+      - app-network
+
+  recommendation-service:
+    build:
+      context: ./recommendation-service
+      dockerfile: Dockerfile
+    container_name: recommendation-service
+    ports:
+      - "8080:8080"
+    depends_on:
+      - redis
+    networks:
+      - app-network
+
+  redis:
+    image: redis:7
+    container_name: redis
+    ports:
+      - "6379:6379"
+    networks:
+      - app-network
+
+networks:
+  app-network:
+    driver: bridge
