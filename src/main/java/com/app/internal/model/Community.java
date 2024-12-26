@@ -4,12 +4,13 @@ import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 
 @Node
-public class Major {
+public class Community {
 
     @Id
     private Long id;
     private String name;
-    private String fieldOfStudy;
+    private String description;
+    private String[] topics;
 
     // Getters and setters
     public Long getId() {
@@ -28,11 +29,19 @@ public class Major {
         this.name = name;
     }
 
-    public String getFieldOfStudy() {
-        return fieldOfStudy;
+    public String getDescription() {
+        return description;
     }
 
-    public void setFieldOfStudy(String fieldOfStudy) {
-        this.fieldOfStudy = fieldOfStudy;
+    public void setDescription(String description) {
+        this.description = description;
+    }
+
+    public String[] getTopics() {
+        return topics;
+    }
+
+    public void setTopics(String[] topics) {
+        this.topics = topics;
     }
 }
