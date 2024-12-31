@@ -1,9 +1,9 @@
-package com.app.internal.handler;
+package com.app.handler;
 
-import com.app.internal.model.Post;
-import com.app.internal.model.User;
-import com.app.internal.model.Community;
-import com.app.internal.queue.ContentInteractionQueue;
+import com.app.model.Post;
+import com.app.model.User;
+import com.app.model.Community;
+import com.app.queue.ContentInteractionQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

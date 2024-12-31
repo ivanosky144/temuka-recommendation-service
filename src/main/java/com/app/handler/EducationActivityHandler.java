@@ -1,10 +1,10 @@
-package com.app.internal.handler;
+package com.app.handler;
 
-import com.app.internal.model.University;
-import com.app.internal.model.Community;
-import com.app.internal.model.Major;
-import com.app.internal.model.User;
-import com.app.internal.queue.EducationActivityQueue;
+import com.app.model.University;
+import com.app.model.Community;
+import com.app.model.Major;
+import com.app.model.User;
+import com.app.queue.EducationActivityQueue;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.stereotype.Component;
 

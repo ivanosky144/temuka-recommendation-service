@@ -1,4 +1,4 @@
-package com.app.internal.model;
+package com.app.model;
 
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;

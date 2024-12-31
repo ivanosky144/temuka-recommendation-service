@@ -1,15 +1,15 @@
-package com.app.internal.model;
+package com.app.model;
 
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 
 @Node
-public class PostRecommendation {
+public class CommunityRecommendation {
 
     @Id
     private Long id;
     private Long userId;
-    private Long recommendedPostId;
+    private Long recommendedCommunityId;
 
     // Getters and setters
     public Long getId() {
@@ -28,11 +28,11 @@ public class PostRecommendation {
         this.userId = userId;
     }
 
-    public Long getRecommendedPostId() {
-        return recommendedPostId;
+    public Long getRecommendedCommunityId() {
+        return recommendedCommunityId;
     }
 
-    public void setRecommendedPostId(Long recommendedPostId) {
-        this.recommendedPostId = recommendedPostId;
+    public void setRecommendedCommunityId(Long recommendedCommunityId) {
+        this.recommendedCommunityId = recommendedCommunityId;
     }
 }

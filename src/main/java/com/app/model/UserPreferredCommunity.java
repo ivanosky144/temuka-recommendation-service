@@ -1,17 +1,17 @@
-package com.app.internal.model;
+package com.app.model;
 
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
 import org.springframework.data.neo4j.core.schema.Relationship;
 
 @Node
-public class UserPreferredPost {
+public class UserPreferredCommunity {
 
     @Id
     private Long id;
 
     @Relationship(type = "PREFERS", direction = Relationship.Direction.OUTGOING)
-    private Post post;
+    private Community community;
 
     @Relationship(type = "PREFERS", direction = Relationship.Direction.INCOMING)
     private User user;
@@ -25,12 +25,12 @@ public class UserPreferredPost {
         this.id = id;
     }
 
-    public Post getPost() {
-        return post;
+    public Community getCommunity() {
+        return community;
     }
 
-    public void setPost(Post post) {
-        this.post = post;
+    public void setCommunity(Community community) {
+        this.community = community;
     }
 
     public User getUser() {
