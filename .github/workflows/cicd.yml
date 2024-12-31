@@ -1,0 +1,68 @@
+name: Deploy Recommendation Service
+
+on:
+  push:
+    branches:
+      - master
+
+jobs:
+  build:
+    runs-on: ubuntu-latest
+    steps:
+      - name: Checkout Source
+        uses: actions/checkout@v4
+
+      - name: Create .env file
+        run: |
+          echo "NEO4J_HOST=${{ secrets.NEO4J_HOST }}" >> .env
+          echo "NEO4J_USER=${{ secrets.NEO4J_USER }}" >> .env
+          echo "NEO4J_PASSWORD=${{ secrets.NEO4J_PASSWORD }}" >> .env
+          echo "NEO4J_PORT=${{ secrets.NEO4J_PORT }}" >> .env
+          echo "NEO4J_NAME=${{ secrets.NEO4J_NAME }}" >> .env
+          echo "SERVER_PORT=${{ secrets.SERVER_PORT }}" >> .env
+          echo "REDIS_HOST=${{ secrets.REDIS_HOST }}" >> .env
+          echo "REDIS_USER=${{ secrets.REDIS_USER }}" >> .env
+          echo "REDIS_PASSWORD=${{ secrets.REDIS_PASSWORD }}" >> .env
+
+      - name: Docker Cleanup (before build)
+        run: |
+          sudo docker system prune -a -f --volumes
+          
+      - name: Login to Docker Hub
+        run: docker login -u ${{ secrets.DOCKER_USERNAME }} -p ${{ secrets.DOCKER_PASSWORD }}
+
+      - name: Build Docker Image
+        run: docker build -t ivanoskytan/temuka-recommendation-service:latest .
+
+      - name: Push Docker Image
+        run: docker push ivanoskytan/temuka-recommendation-service:latest
+
+      - name: Docker Cleanup (after build)
+        run: |
+          sudo docker system prune -a -f --volumes
+
+  deploy:
+    needs: build
+    runs-on: self-hosted
+    steps:
+      - name: Docker Cleanup (before pull)
+        run: |
+          sudo docker system prune -a -f --volumes
+
+      - name: Pull Docker Image
+        run: sudo docker pull ivanoskytan/temuka-recommendation-service:latest
+
+      - name: Delete Old Container
+        run: |
+          sudo docker stop temuka-recommendation-service || true
+          sudo docker rm temuka-recommendation-service || true
+
+      - name: Run Docker Container
+        run: |
+          sudo docker run -d -p 5173:${{ secrets.SERVER_PORT }} \
+            --name temuka-recommendation-service \
+            ivanoskytan/temuka-recommendation-service:latest
+
+      - name: Docker Cleanup (after deploy)
+        run: |
+          sudo docker system prune -a -f --volumes
