@@ -7,15 +7,11 @@ import org.springframework.data.neo4j.core.schema.Relationship;
 import java.time.LocalDateTime;
 import java.util.List;
 
-public class Post {
+public class MajorReview {
     
     @Id
     private Long id;
-    private String title;
-    private String description;
-    private Integer totalLikes;
-    private Integer totalComments;
-
-    @Relationship(type = "HAS_COMMENT", direction = Relationship.Direction.OUTGOING)
-    private List<Comment> comments;
+    private String text;
+    private Integer stars;
+    
 }

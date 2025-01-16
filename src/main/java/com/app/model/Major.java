@@ -2,37 +2,19 @@ package com.app.model;
 
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.Relationship;
 
-@Node
+import java.time.LocalDateTime;
+import java.util.List;
+
 public class Major {
-
+    
     @Id
     private Long id;
     private String name;
-    private String fieldOfStudy;
+    private Integer rating;
+    private Integer totalReviews;
 
-    // Getters and setters
-    public Long getId() {
-        return id;
-    }
-
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getFieldOfStudy() {
-        return fieldOfStudy;
-    }
-
-    public void setFieldOfStudy(String fieldOfStudy) {
-        this.fieldOfStudy = fieldOfStudy;
-    }
+    @Relationship(type = "HAS_REVIEW", direction = Relationship.Direction.OUTGOING)
+    private List<MajorReview> reviews;
 }

@@ -2,49 +2,31 @@ package com.app.model;
 
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.Relationship;
 
-@Node
+import java.time.LocalDateTime;
+import java.util.List;
+
 public class User {
-
+    
     @Id
     private Long id;
-
     private String username;
+    private String displayname;
     private String email;
-    private String fullName;
+    private String password;
+    private String profilePicture;
+    private Integer socialPoint;
 
-    // Add other properties as needed (e.g., profile picture, role, etc.)
+    @Relationship(type = "FOLLOWS", direction = Relationship.Direction.OUTGOING)
+    private List<User> followings;
 
-    // Getters and setters
-    public Long getId() {
-        return id;
-    }
+    @Relationship(type = "HAS_COMMENT", direction = Relationship.Direction.OUTGOING)
+    private List<Comment> comments;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
+    @Relationship(type = "IS_MEMBER_OF", direction = Relationship.Direction.INCOMING)
+    private List<Community> communities;
 
-    public String getUsername() {
-        return username;
-    }
-
-    public void setUsername(String username) {
-        this.username = username;
-    }
-
-    public String getEmail() {
-        return email;
-    }
-
-    public void setEmail(String email) {
-        this.email = email;
-    }
-
-    public String getFullName() {
-        return fullName;
-    }
-
-    public void setFullName(String fullName) {
-        this.fullName = fullName;
-    }
+    @Relationship(type = "HAS_POST", direction = Relationship.Direction.OUTGOING)
+    private List<Post> posts;
 }

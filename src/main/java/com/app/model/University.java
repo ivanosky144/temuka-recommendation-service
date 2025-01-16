@@ -2,55 +2,23 @@ package com.app.model;
 
 import org.springframework.data.neo4j.core.schema.Id;
 import org.springframework.data.neo4j.core.schema.Node;
+import org.springframework.data.neo4j.core.schema.Relationship;
 
-@Node
+import java.time.LocalDateTime;
+import java.util.List;
+
 public class University {
-
+    
     @Id
     private Long id;
     private String name;
-    private String location;
-    private String country;
-    private String ranking;
+    private String slug;
+    private String logo;
+    private String summary;
 
-    // Getters and setters
-    public Long getId() {
-        return id;
-    }
+    @Relationship(type = "HAS_REVIEW", direction = Relationship.Direction.OUTGOING)
+    private List<Review> reviews;
 
-    public void setId(Long id) {
-        this.id = id;
-    }
-
-    public String getName() {
-        return name;
-    }
-
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public String getLocation() {
-        return location;
-    }
-
-    public void setLocation(String location) {
-        this.location = location;
-    }
-
-    public String getCountry() {
-        return country;
-    }
-
-    public void setCountry(String country) {
-        this.country = country;
-    }
-
-    public String getRanking() {
-        return ranking;
-    }
-
-    public void setRanking(String ranking) {
-        this.ranking = ranking;
-    }
+    @Relationship(type = "HAS_MAJOR", direction = Relationship.Direction.OUTGOING)
+    private List<Major> majors;
 }
